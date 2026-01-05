@@ -1,3 +1,5 @@
+import 'package:coffeestories/feature/home/data/home_repo_impl.dart';
+import 'package:coffeestories/feature/home/domain/home_repo.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,6 +50,10 @@ Future<void> configureDependencies() async {
         tokens: getIt<SecureTokenDataSource>(),
       ),
     );
+  }
+
+  if (!getIt.isRegistered<HomeRepository>()) {
+    getIt.registerLazySingleton<HomeRepository>(() => HomeRepositoryDummy());
   }
 
   // Cubits

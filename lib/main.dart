@@ -1,3 +1,5 @@
+import 'package:coffeestories/feature/home/domain/home_repo.dart';
+import 'package:coffeestories/feature/home/presentation/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:coffeestories/app/theme/app_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +47,8 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider<AppFlowCubit>.value(value: _flow),
         BlocProvider<SplashCubit>(create: (_) => SplashCubit(flow: _flow)),
+        BlocProvider<HomeCubit>(create: (_) => HomeCubit(repo: getIt<HomeRepository>())),
+
       ],
       child: ScreenUtilInit(
         designSize: const Size(393, 852), // iPhone 16 logical size
