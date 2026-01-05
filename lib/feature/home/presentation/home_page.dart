@@ -7,6 +7,7 @@ import '../../../app/router/route_names.dart';
 import '../../../app/theme/app_colors.dart';
 import '../domain/recent_chat.dart';
 import '../widgets/home_credit_card.dart';
+import '../widgets/home_empty_state.dart';
 import '../widgets/home_header.dart';
 import '../widgets/home_primary_button.dart';
 import '../widgets/recent_chat_tile.dart';
@@ -63,65 +64,111 @@ class HomePage extends StatelessWidget {
                 .fadeIn(duration: 350.ms)
                 .slideY(begin: -0.10, end: 0, duration: 350.ms, curve: Curves.easeOut),
 
-            // RECENT CHATS
+            // RECENT CHATS / EMPTY STATE
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Son Sohbetler',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AppColors.foreground,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
+                child: _recentChats.isEmpty
+                    ? const HomeEmptyState()
+                        .animate()
+                        .fadeIn(duration: 300.ms)
+                        .slideY(
+                          begin: 0.08,
+                          end: 0,
+                          duration: 300.ms,
+                          curve: Curves.easeOut,
+                        )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Son Sohbetler',
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                  color: AppColors.foreground,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          SizedBox(height: 12.h),
+                          Expanded(
+                            child: ListView.separated(
+                              padding: EdgeInsets.only(bottom: 12.h),
+                              itemCount: _recentChats.length,
+                              separatorBuilder: (_, __) => SizedBox(height: 12.h),
+                              itemBuilder: (context, index) {
+                                final chat = _recentChats[index];
+                                return RecentChatTile(
+                                  chat: chat,
+                                  onTap: () => context.go(RouteNames.camera), // React’te onStartChat
+                                )
+                                    .animate()
+                                    .fadeIn(
+                                      duration: 300.ms,
+                                      delay: (100 * index).ms,
+                                    )
+                                    .slideX(
+                                      begin: -0.10,
+                                      end: 0,
+                                      duration: 300.ms,
+                                      delay: (100 * index).ms,
+                                      curve: Curves.easeOut,
+                                    );
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(height: 12.h),
-                    Expanded(
-                      child: ListView.separated(
-                        padding: EdgeInsets.only(bottom: 12.h),
-                        itemCount: _recentChats.length,
-                        separatorBuilder: (_, __) => SizedBox(height: 12.h),
-                        itemBuilder: (context, index) {
-                          final chat = _recentChats[index];
-                          return RecentChatTile(
-                            chat: chat,
-                            onTap: () => context.go(RouteNames.camera), // React’te onStartChat
-                          )
-                              .animate()
-                              .fadeIn(
-                            duration: 300.ms,
-                            delay: (100 * index).ms,
-                          )
-                              .slideX(
-                            begin: -0.10,
-                            end: 0,
-                            duration: 300.ms,
-                            delay: (100 * index).ms,
-                            curve: Curves.easeOut,
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
               ),
             ),
 
-            // NEW CHAT BUTTON
-            Padding(
-              padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 24.h),
-              child: HomePrimaryButton(
-                label: 'Yeni Sohbet Başlat',
-                icon: Icons.chat_bubble_outline,
-                onTap: () => context.go(RouteNames.camera),
-              ).animate().scaleXY(
-                begin: 1.0,
-                end: 1.0,
+            // BOTTOM CTA (only when there are recent chats)
+            if (_recentChats.isNotEmpty)
+              Padding(
+                padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 24.h),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Secondary: Sesli Sohbet
+                    SizedBox(
+                      width: double.infinity,
+                      height: 52.h,
+                      child: OutlinedButton.icon(
+                        onPressed: () => context.go(RouteNames.camera),
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14.r),
+                          ),
+                          side: BorderSide(
+                            color: AppColors.foreground.withOpacity(0.14),
+                            width: 1,
+                          ),
+                          backgroundColor: Colors.transparent,
+                          foregroundColor: AppColors.foreground,
+                        ),
+                        icon: Icon(
+                          Icons.mic_none,
+                          size: 20.sp,
+                        ),
+                        label: Text(
+                          'Sesli Sohbet Başlat',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 12.h),
+
+                    // Primary: Yeni Sohbet
+                    HomePrimaryButton(
+                      label: 'Yeni Sohbet Başlat',
+                      icon: Icons.chat_bubble_outline,
+                      onTap: () => context.go(RouteNames.camera),
+                    ),
+                  ],
+                ).animate().fadeIn(duration: 250.ms).slideY(begin: 0.10, end: 0, duration: 250.ms),
               ),
-            ),
           ],
         ),
       ),
