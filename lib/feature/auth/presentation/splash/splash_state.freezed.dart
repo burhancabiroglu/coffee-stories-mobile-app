@@ -55,12 +55,14 @@ extension SplashStatePatterns on SplashState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SplashLoading value)?  loading,TResult Function( SplashReady value)?  ready,TResult Function( SplashForceUpdate value)?  forceUpdate,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SplashLoading value)?  loading,TResult Function( SplashGoHome value)?  goHome,TResult Function( SplashGoOnboarding value)?  goOnboarding,TResult Function( SplashGoLogin value)?  goLogin,TResult Function( SplashForceUpdate value)?  forceUpdate,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case SplashLoading() when loading != null:
-return loading(_that);case SplashReady() when ready != null:
-return ready(_that);case SplashForceUpdate() when forceUpdate != null:
+return loading(_that);case SplashGoHome() when goHome != null:
+return goHome(_that);case SplashGoOnboarding() when goOnboarding != null:
+return goOnboarding(_that);case SplashGoLogin() when goLogin != null:
+return goLogin(_that);case SplashForceUpdate() when forceUpdate != null:
 return forceUpdate(_that);case _:
   return orElse();
 
@@ -79,12 +81,14 @@ return forceUpdate(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SplashLoading value)  loading,required TResult Function( SplashReady value)  ready,required TResult Function( SplashForceUpdate value)  forceUpdate,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SplashLoading value)  loading,required TResult Function( SplashGoHome value)  goHome,required TResult Function( SplashGoOnboarding value)  goOnboarding,required TResult Function( SplashGoLogin value)  goLogin,required TResult Function( SplashForceUpdate value)  forceUpdate,}){
 final _that = this;
 switch (_that) {
 case SplashLoading():
-return loading(_that);case SplashReady():
-return ready(_that);case SplashForceUpdate():
+return loading(_that);case SplashGoHome():
+return goHome(_that);case SplashGoOnboarding():
+return goOnboarding(_that);case SplashGoLogin():
+return goLogin(_that);case SplashForceUpdate():
 return forceUpdate(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -99,12 +103,14 @@ return forceUpdate(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SplashLoading value)?  loading,TResult? Function( SplashReady value)?  ready,TResult? Function( SplashForceUpdate value)?  forceUpdate,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SplashLoading value)?  loading,TResult? Function( SplashGoHome value)?  goHome,TResult? Function( SplashGoOnboarding value)?  goOnboarding,TResult? Function( SplashGoLogin value)?  goLogin,TResult? Function( SplashForceUpdate value)?  forceUpdate,}){
 final _that = this;
 switch (_that) {
 case SplashLoading() when loading != null:
-return loading(_that);case SplashReady() when ready != null:
-return ready(_that);case SplashForceUpdate() when forceUpdate != null:
+return loading(_that);case SplashGoHome() when goHome != null:
+return goHome(_that);case SplashGoOnboarding() when goOnboarding != null:
+return goOnboarding(_that);case SplashGoLogin() when goLogin != null:
+return goLogin(_that);case SplashForceUpdate() when forceUpdate != null:
 return forceUpdate(_that);case _:
   return null;
 
@@ -122,11 +128,13 @@ return forceUpdate(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function()?  ready,TResult Function()?  forceUpdate,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function()?  goHome,TResult Function()?  goOnboarding,TResult Function()?  goLogin,TResult Function()?  forceUpdate,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case SplashLoading() when loading != null:
-return loading();case SplashReady() when ready != null:
-return ready();case SplashForceUpdate() when forceUpdate != null:
+return loading();case SplashGoHome() when goHome != null:
+return goHome();case SplashGoOnboarding() when goOnboarding != null:
+return goOnboarding();case SplashGoLogin() when goLogin != null:
+return goLogin();case SplashForceUpdate() when forceUpdate != null:
 return forceUpdate();case _:
   return orElse();
 
@@ -145,11 +153,13 @@ return forceUpdate();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function()  ready,required TResult Function()  forceUpdate,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function()  goHome,required TResult Function()  goOnboarding,required TResult Function()  goLogin,required TResult Function()  forceUpdate,}) {final _that = this;
 switch (_that) {
 case SplashLoading():
-return loading();case SplashReady():
-return ready();case SplashForceUpdate():
+return loading();case SplashGoHome():
+return goHome();case SplashGoOnboarding():
+return goOnboarding();case SplashGoLogin():
+return goLogin();case SplashForceUpdate():
 return forceUpdate();}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -164,11 +174,13 @@ return forceUpdate();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function()?  ready,TResult? Function()?  forceUpdate,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function()?  goHome,TResult? Function()?  goOnboarding,TResult? Function()?  goLogin,TResult? Function()?  forceUpdate,}) {final _that = this;
 switch (_that) {
 case SplashLoading() when loading != null:
-return loading();case SplashReady() when ready != null:
-return ready();case SplashForceUpdate() when forceUpdate != null:
+return loading();case SplashGoHome() when goHome != null:
+return goHome();case SplashGoOnboarding() when goOnboarding != null:
+return goOnboarding();case SplashGoLogin() when goLogin != null:
+return goLogin();case SplashForceUpdate() when forceUpdate != null:
 return forceUpdate();case _:
   return null;
 
@@ -212,8 +224,8 @@ String toString() {
 /// @nodoc
 
 
-class SplashReady implements SplashState {
-  const SplashReady();
+class SplashGoHome implements SplashState {
+  const SplashGoHome();
   
 
 
@@ -223,7 +235,7 @@ class SplashReady implements SplashState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashReady);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashGoHome);
 }
 
 
@@ -232,7 +244,71 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'SplashState.ready()';
+  return 'SplashState.goHome()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class SplashGoOnboarding implements SplashState {
+  const SplashGoOnboarding();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashGoOnboarding);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'SplashState.goOnboarding()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class SplashGoLogin implements SplashState {
+  const SplashGoLogin();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SplashGoLogin);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'SplashState.goLogin()';
 }
 
 

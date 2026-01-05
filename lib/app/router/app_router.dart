@@ -1,6 +1,7 @@
 import 'package:coffeestories/feature/auth/presentation/register/register_page.dart';
 import 'package:go_router/go_router.dart';
 import '../../feature/auth/presentation/login/login_page.dart';
+import '../../feature/home/presentation/home_page.dart';
 import 'route_names.dart';
 import 'app_flow_cubit.dart';
 import 'go_router_refresh_stream.dart';
@@ -58,10 +59,10 @@ GoRouter createRouter(AppFlowCubit flow) {
           path: RouteNames.register,
           builder: (_, __) => const RegisterPage(),
         ),
-        // GoRoute(
-        //   path: RouteNames.home,
-        //   builder: (_, __) => const HomePage(),
-        // ),
+        GoRoute(
+          path: RouteNames.home,
+          builder: (_, __) => const HomePage(),
+        ),
         //
         // GoRoute(
         //   path: RouteNames.creditPurchase,

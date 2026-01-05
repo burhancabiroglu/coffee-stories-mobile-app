@@ -5,8 +5,13 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app/router/app_flow_cubit.dart';
 import 'app/router/app_router.dart';
+import 'core/di/di.dart';
 
-void main() {
+import 'feature/auth/presentation/splash/splash_cubit.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
   runApp(const MyApp());
 }
 
@@ -24,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _flow = AppFlowCubit()..bootstrap();
+    _flow = getIt<AppFlowCubit>()..bootstrap();
     _router = createRouter(_flow);
   }
 
@@ -36,8 +41,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _flow,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AppFlowCubit>.value(value: _flow),
+        BlocProvider<SplashCubit>(create: (_) => SplashCubit(flow: _flow)),
+      ],
       child: ScreenUtilInit(
         designSize: const Size(393, 852), // iPhone 16 logical size
         minTextAdapt: true,
