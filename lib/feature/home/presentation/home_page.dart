@@ -61,12 +61,12 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       HomeHeader(
-                        onSettings: () => context.go(RouteNames.settings),
+                        onSettings: () => context.push(RouteNames.settings),
                       ),
                       SizedBox(height: 24.h),
                       HomeCreditCard(
                         credits: credits,
-                        onBuyCredits: () => context.go(RouteNames.creditPurchase),
+                        onBuyCredits: () => context.push(RouteNames.creditPurchase),
                       ),
                     ],
                   ),

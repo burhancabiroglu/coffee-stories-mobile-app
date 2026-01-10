@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../app/theme/app_colors.dart';
-import '../domain/recent_chat.dart';
+import '../data/model/recent_chat.dart';
 
 class RecentChatTile extends StatelessWidget {
   final RecentChat chat;

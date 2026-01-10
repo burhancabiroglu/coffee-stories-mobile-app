@@ -1,5 +1,9 @@
-import '../domain/home_repo.dart';
-import '../domain/recent_chat.dart';
+import '../model/recent_chat.dart';
+
+abstract class HomeRepository {
+  Future<int> getCreditBalance();
+  Future<List<RecentChat>> getRecentChats({int limit = 20});
+}
 
 class HomeRepositoryDummy implements HomeRepository {
   @override

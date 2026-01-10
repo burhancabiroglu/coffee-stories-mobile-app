@@ -30,7 +30,7 @@ class AppFlowCubit extends Cubit<AppFlowState> {
         state.copyWith(
           isBootstrapped: true,
           onboardingSeen: snap.onboardingSeen,
-          isAuthed: true,//snap.isAuthed,
+          isAuthed: true,// todo: snap.isAuthed,
         ),
       );
     } catch (_) {

@@ -1,16 +1,12 @@
-
-import 'package:coffeestories/feature/home/domain/recent_chat.dart';
+import 'package:coffeestories/feature/home/data/model/recent_chat.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../domain/home_repo.dart';
+import '../data/repo/home_repo.dart';
 import 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  final HomeRepository _repo;
+  final HomeRepository repo;
 
-  HomeCubit({required HomeRepository repo})
-      : _repo = repo,
-        super(const HomeState.loading());
+  HomeCubit({required this.repo}) :super(const HomeState.loading());
 
   /// Home açılışında çağrılacak.
   /// - önce loading
@@ -21,8 +17,8 @@ class HomeCubit extends Cubit<HomeState> {
 
     try {
       final results = await Future.wait([
-        _repo.getCreditBalance(),
-        _repo.getRecentChats(limit: 20),
+        repo.getCreditBalance(),
+        repo.getRecentChats(limit: 20),
       ]);
 
       final credits = results[0] as int;

@@ -1,4 +1,3 @@
-import 'package:coffeestories/feature/home/domain/home_repo.dart';
 import 'package:coffeestories/feature/home/presentation/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:coffeestories/app/theme/app_theme.dart';
@@ -10,6 +9,8 @@ import 'app/router/app_router.dart';
 import 'core/di/di.dart';
 
 import 'feature/auth/presentation/splash/splash_cubit.dart';
+import 'feature/credit/presentation/credit_purchase_cubit.dart';
+import 'feature/settings/presentation/settings/settings_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,24 +32,25 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _flow = getIt<AppFlowCubit>()..bootstrap();
+    _flow = injector<AppFlowCubit>()..bootstrap();
     _router = createRouter(_flow);
   }
 
-  @override
-  void dispose() {
-    _flow.close();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _flow.close();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<AppFlowCubit>.value(value: _flow),
-        BlocProvider<SplashCubit>(create: (_) => SplashCubit(flow: _flow)),
-        BlocProvider<HomeCubit>(create: (_) => HomeCubit(repo: getIt<HomeRepository>())),
-
+        BlocProvider<AppFlowCubit>.value(value: injector()),
+        BlocProvider<SplashCubit>(create: (_) => SplashCubit(flow: injector())),
+        BlocProvider<HomeCubit>(create: (_) => HomeCubit(repo: injector())),
+        BlocProvider<SettingsCubit>(create: (_) => SettingsCubit(repo: injector())),
+        BlocProvider<CreditPurchaseCubit>(create: (_) => CreditPurchaseCubit(repo: injector(), ads: injector())),
       ],
       child: ScreenUtilInit(
         designSize: const Size(393, 852), // iPhone 16 logical size

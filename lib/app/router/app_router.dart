@@ -1,7 +1,15 @@
 import 'package:coffeestories/feature/auth/presentation/register/register_page.dart';
 import 'package:go_router/go_router.dart';
 import '../../feature/auth/presentation/login/login_page.dart';
+import '../../feature/credit/presentation/credit_purchase_page.dart';
 import '../../feature/home/presentation/home_page.dart';
+import '../../feature/settings/presentation/help/help_page.dart';
+import '../../feature/settings/presentation/notification/notification_page.dart';
+import '../../feature/settings/presentation/policy/policy_page.dart';
+import '../../feature/settings/presentation/privacy/privacy_page.dart';
+import '../../feature/settings/presentation/profile/profile_page.dart';
+import '../../feature/settings/presentation/settings/settings_page.dart';
+import '../../feature/settings/presentation/terms/terms_page.dart';
 import 'route_names.dart';
 import 'app_flow_cubit.dart';
 import 'go_router_refresh_stream.dart';
@@ -63,11 +71,10 @@ GoRouter createRouter(AppFlowCubit flow) {
           path: RouteNames.home,
           builder: (_, __) => const HomePage(),
         ),
-        //
-        // GoRoute(
-        //   path: RouteNames.creditPurchase,
-        //   builder: (_, __) => const CreditPurchasePage(),
-        // ),
+        GoRoute(
+          path: RouteNames.creditPurchase,
+          builder: (_, __) => const CreditPurchasePage(),
+        ),
         // GoRoute(
         //   path: RouteNames.creditsFinished,
         //   builder: (_, __) => const CreditsFinishedPage(),
@@ -95,10 +102,36 @@ GoRouter createRouter(AppFlowCubit flow) {
         //   builder: (_, __) => const ConversationEndPage(),
         // ),
         //
-        // GoRoute(
-        //   path: RouteNames.settings,
-        //   builder: (_, __) => const SettingsPage(),
-        // ),
+        GoRoute(
+          path: RouteNames.settings,
+          builder: (_, __) => const SettingsPage(),
+          routes: [
+            GoRoute(
+              path: 'profile',
+              builder: (_, __) => const SettingsProfilePage(),
+            ),
+            GoRoute(
+              path: 'notifications',
+              builder: (_, __) => const SettingsNotificationsPage(),
+            ),
+            GoRoute(
+              path: 'privacy',
+              builder: (_, __) => const SettingsPrivacyPage(),
+            ),
+            GoRoute(
+              path: 'help',
+              builder: (_, __) => const SettingsHelpPage(),
+            ),
+            GoRoute(
+              path: 'terms',
+              builder: (_, __) => const SettingsTermsPage(),
+            ),
+            GoRoute(
+              path: 'privacy-policy',
+              builder: (_, __) => const SettingsPrivacyPolicyPage(),
+            ),
+          ],
+        ),
       ]
   );
 }
