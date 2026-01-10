@@ -18,11 +18,6 @@ import 'package:coffeestories/feature/settings/presentation/terms/terms_page.dar
 import 'package:coffeestories/feature/auth/presentation/splash/splash_page.dart';
 import 'package:coffeestories/feature/auth/presentation/onboarding/onboarding_page.dart';
 import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_page.dart';
-import 'package:coffeestories/feature/chat/presentation/camera/camera_page.dart';
-import 'package:coffeestories/feature/chat/presentation/photo_review/photo_review_page.dart';
-import 'package:coffeestories/feature/chat/presentation/text_chat/text_chat_page.dart';
-import 'package:coffeestories/feature/chat/presentation/voice_chat/voice_chat_page.dart';
-import 'package:coffeestories/feature/chat/presentation/conversation_end/conversation_end_page.dart';
 
 
 GoRouter createRouter(AppFlowCubit flow) {
@@ -85,28 +80,6 @@ GoRouter createRouter(AppFlowCubit flow) {
         GoRoute(
           path: RouteNames.chatFlow,
           builder: (_, __) => const ChatFlowPage(),
-          routes: [
-            GoRoute(
-              path: 'camera',
-              builder: (_, __) => const CameraPage(),
-            ),
-            GoRoute(
-              path: 'photo-review',
-              builder: (_, __) => const PhotoReviewPage(),
-            ),
-            GoRoute(
-              path: 'text',
-              builder: (_, __) => TextChatPage(),
-            ),
-            GoRoute(
-              path: 'voice',
-              builder: (_, __) => VoiceChatPage(),
-            ),
-            GoRoute(
-              path: 'result',
-              builder: (_, __) => ConversationEndPage(),
-            ),
-          ],
         ),
         GoRoute(
           path: RouteNames.settings,

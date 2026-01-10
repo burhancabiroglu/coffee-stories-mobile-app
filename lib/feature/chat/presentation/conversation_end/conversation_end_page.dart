@@ -1,5 +1,7 @@
+import 'package:coffeestories/app/router/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../app/theme/app_colors.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -65,7 +67,7 @@ class ConversationEndPage extends StatelessWidget {
                             ),
                             SizedBox(height: 12.h),
                             Text(
-                              'Bu samimi sohbet için teşekkür ederiz. Kendinize iyi bakın,\n'
+                              'Bu samimi sohbet için teşekkür ederiz.\nKendinize iyi bakın, '
                                   've ne zaman isterseniz tekrar gelin.',
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -92,7 +94,7 @@ class ConversationEndPage extends StatelessWidget {
                             ),
                           ),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
                                 width: 4.w, // border-l-4
@@ -103,7 +105,7 @@ class ConversationEndPage extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(width: 12.w),
-                              Expanded(
+                              Center(
                                 child: Text(
                                   '"Bir fincan kahvenin kırk yıl hatırı vardır."',
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -149,7 +151,11 @@ class ConversationEndPage extends StatelessWidget {
                       icon: Icon(Icons.chat_bubble_outline, size: 20.sp),
                       label: Text(
                         'Yeni Sohbet',
-                        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w800),
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: Colors.white,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
@@ -158,7 +164,7 @@ class ConversationEndPage extends StatelessWidget {
                     width: double.infinity,
                     height: 56.h,
                     child: OutlinedButton.icon(
-                      onPressed: (){},//onHome
+                      onPressed: () => context.go(RouteNames.home),//onHome
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.foreground,
                         backgroundColor: Colors.transparent,
@@ -170,7 +176,10 @@ class ConversationEndPage extends StatelessWidget {
                       icon: Icon(Icons.coffee, size: 20.sp, color: AppColors.foreground),
                       label: Text(
                         'Ana Sayfaya Dön',
-                        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w800),
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),

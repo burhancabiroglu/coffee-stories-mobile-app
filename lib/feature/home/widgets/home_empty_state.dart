@@ -1,3 +1,4 @@
+import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_args.dart';
 import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -65,7 +66,7 @@ class HomeEmptyState extends StatelessWidget {
                 icon: Icons.chat_bubble_outline,
                 onTap: () => context.push(
                   RouteNames.chatFlow,
-                  extra: ChatStrategy.text
+                  extra: ChatFlowArgs.text()
                 ),
               ),
               SizedBox(height: 12.h),
@@ -77,7 +78,7 @@ class HomeEmptyState extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: () => context.push(
                     RouteNames.chatFlow,
-                    extra: ChatStrategy.voice
+                    extra: ChatFlowArgs.voice()
                   ),
                   style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(

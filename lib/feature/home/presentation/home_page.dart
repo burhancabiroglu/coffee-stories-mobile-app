@@ -1,3 +1,4 @@
+import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_args.dart';
 import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -164,7 +165,10 @@ class _HomePageState extends State<HomePage> {
                                 final chat = recentChats[index];
                                 return RecentChatTile(
                                   chat: chat,
-                                  onTap: () => context.go(RouteNames.chatFlow),
+                                  onTap: () => context.push(
+                                      RouteNames.chatFlow,
+                                    extra: ChatFlowArgs.previous(id: "234234")
+                                  ),
                                 )
                                     .animate()
                                     .fadeIn(
@@ -199,9 +203,9 @@ class _HomePageState extends State<HomePage> {
                           width: double.infinity,
                           height: 52.h,
                           child: OutlinedButton.icon(
-                            onPressed: () => context.go(
+                            onPressed: () => context.push(
                               RouteNames.chatFlow,
-                              extra: ChatStrategy.voice
+                              extra: ChatFlowArgs.voice()
                             ),
                             style: OutlinedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -235,7 +239,7 @@ class _HomePageState extends State<HomePage> {
                           icon: Icons.chat_bubble_outline,
                           onTap: () => context.go(
                             RouteNames.chatFlow,
-                            extra: ChatStrategy.text
+                            extra: ChatFlowArgs.text()
                           ),
                         ),
                       ],

@@ -13,6 +13,7 @@ import 'package:coffeestories/feature/chat/presentation/voice_chat/voice_chat_pa
 
 import 'chat_flow_cubit.dart';
 import 'chat_flow_state.dart';
+import 'chat_flow_args.dart';
 
 class ChatFlowPage extends StatefulWidget {
   const ChatFlowPage({super.key});
@@ -28,6 +29,15 @@ class _ChatFlowPageState extends State<ChatFlowPage> {
   void initState() {
     super.initState();
     cubit = context.read<ChatFlowCubit>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final extra = GoRouterState.of(context).extra;
+      final args = extra is ChatFlowArgs ? extra : const ChatFlowArgs.text();
+      cubit.start(strategy: args.entry, sessionId: args.previousSessionId);
+      if(args.entry == ChatStrategy.previous) {
+        cubit.continueFromPhoto();
+      }
+    });
   }
 
   @override
@@ -49,8 +59,12 @@ class _ChatFlowPageState extends State<ChatFlowPage> {
                 camera: () => const CameraPage(),
                 chat: (strategy, sessionId) {
                   switch (strategy) {
-                    case ChatStrategy.text: return TextChatPage();
-                    case ChatStrategy.voice: return const VoiceChatPage();
+                    case ChatStrategy.text:
+                      return TextChatPage();
+                    case ChatStrategy.voice:
+                      return const VoiceChatPage();
+                    case ChatStrategy.previous:
+                      return TextChatPage();
                   }
                 },
                 result: (strategy, sessionId) => const ConversationEndPage(),

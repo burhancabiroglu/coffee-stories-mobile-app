@@ -1,5 +1,7 @@
 import 'package:coffeestories/app/theme/app_colors.dart';
+import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../data/model/chat_message.dart';
@@ -23,6 +25,7 @@ class TextChatPage extends StatefulWidget {
 }
 
 class _TextChatPageState extends State<TextChatPage> {
+  late final ChatFlowCubit chatFlowCubit;
   final _scrollController = ScrollController();
   final _inputController = TextEditingController();
 
@@ -50,7 +53,7 @@ class _TextChatPageState extends State<TextChatPage> {
         timestamp: DateTime.now(),
       ),
     ];
-
+    chatFlowCubit = context.read<ChatFlowCubit>();
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom(jump: true));
   }
 
@@ -161,7 +164,7 @@ class _TextChatPageState extends State<TextChatPage> {
                     height: 44.w,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(999),
-                      onTap: () {}, // todo: widget.onBack
+                      onTap: chatFlowCubit.cancelFlow,
                       child: Container(
                         decoration: BoxDecoration(
                           color: AppColors.foreground.withAlpha(16),
@@ -355,7 +358,7 @@ class _TextChatPageState extends State<TextChatPage> {
                   if (_questionCount >= 3) ...[
                     SizedBox(height: 10.h),
                     GestureDetector(
-                      onTap: () {}, // todo:widget.onComplete,
+                      onTap: chatFlowCubit.finishChat,
                       child: Text(
                         'Sohbeti Bitir',
                         style: TextStyle(

@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:coffeestories/app/theme/app_colors.dart';
+import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../data/model/voice_chat.dart';
@@ -20,6 +22,7 @@ class VoiceChatPage extends StatefulWidget {
 
 class _VoiceChatPageState extends State<VoiceChatPage> {
   VoiceState voiceState = VoiceState.idle;
+  late final ChatFlowCubit chatFlowCubit;
   final List<String> _transcript = ['Merhaba! Sizi dinliyorum...'];
 
   Timer? _t1;
@@ -33,6 +36,12 @@ class _VoiceChatPageState extends State<VoiceChatPage> {
 
   Color get _borderColor => AppColors.foreground.withAlpha(20);
   Color get _mutedFg => AppColors.foreground.withAlpha(166);
+
+  @override
+  void initState() {
+    super.initState();
+    chatFlowCubit = context.read<ChatFlowCubit>();
+  }
 
   @override
   void dispose() {
@@ -98,7 +107,7 @@ class _VoiceChatPageState extends State<VoiceChatPage> {
                         height: 44.w,
                         child: InkWell(
                           borderRadius: BorderRadius.circular(999),
-                          onTap: () {}, // todo: widget.onBack
+                          onTap: chatFlowCubit.cancelFlow,
                           child: Container(
                             decoration: BoxDecoration(
                               color: AppColors.foreground.withAlpha(16),
@@ -243,7 +252,7 @@ class _VoiceChatPageState extends State<VoiceChatPage> {
                     width: double.infinity,
                     height: 56.h,
                     child: OutlinedButton.icon(
-                      onPressed: () {}, // todo: widget.onComplete
+                      onPressed: chatFlowCubit.finishChat,
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.red.withAlpha(18),
                         foregroundColor: Colors.red,

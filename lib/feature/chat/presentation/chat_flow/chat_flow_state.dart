@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'chat_flow_state.freezed.dart';
 
-enum ChatStrategy { text, voice }
+enum ChatStrategy { text, voice, previous }
 
 @freezed
 sealed class ChatFlowState with _$ChatFlowState {

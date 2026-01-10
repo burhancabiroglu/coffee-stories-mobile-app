@@ -9,6 +9,7 @@ import '../chat_flow/chat_flow_cubit.dart';
 import '../chat_flow/chat_flow_state.dart';
 
 class PhotoReviewPage extends StatelessWidget {
+
   const PhotoReviewPage({super.key});
 
   Color get _borderColor => AppColors.foreground.withAlpha(20);
@@ -16,6 +17,7 @@ class PhotoReviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final chatFlowCubit = context.read<ChatFlowCubit>();
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -104,7 +106,6 @@ class PhotoReviewPage extends StatelessWidget {
                         ),
                       ),
                     ),
-
                     // Info + Buttons
                     Padding(
                       padding: EdgeInsets.fromLTRB(24.w, 18.h, 24.w, 24.h),
@@ -129,7 +130,7 @@ class PhotoReviewPage extends StatelessWidget {
                                   width: double.infinity,
                                   height: 56.h,
                                   child: ElevatedButton(
-                                    onPressed:  () {}, // todo: context.read<ChatFlowCubit>().continueFromPhoto(),
+                                    onPressed: chatFlowCubit.continueFromPhoto,
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: AppColors.primary,
                                       foregroundColor: AppColors.onPrimary,
@@ -149,7 +150,7 @@ class PhotoReviewPage extends StatelessWidget {
                                   width: double.infinity,
                                   height: 56.h,
                                   child: OutlinedButton.icon(
-                                    onPressed: () {}, // todo: context.read<ChatFlowCubit>().retakePhoto(),
+                                    onPressed: chatFlowCubit.retakePhoto,
                                     style: OutlinedButton.styleFrom(
                                       foregroundColor: AppColors.foreground,
                                       side: BorderSide(color: _borderColor, width: 1),
