@@ -1,3 +1,4 @@
+import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -62,7 +63,10 @@ class HomeEmptyState extends StatelessWidget {
               HomePrimaryButton(
                 label: 'Yazılı Sohbet',
                 icon: Icons.chat_bubble_outline,
-                onTap: () => context.go(RouteNames.camera),
+                onTap: () => context.push(
+                  RouteNames.chatFlow,
+                  extra: ChatStrategy.text
+                ),
               ),
               SizedBox(height: 12.h),
 
@@ -71,7 +75,10 @@ class HomeEmptyState extends StatelessWidget {
                 width: double.infinity,
                 height: 52.h,
                 child: OutlinedButton.icon(
-                  onPressed: () => context.go(RouteNames.camera),
+                  onPressed: () => context.push(
+                    RouteNames.chatFlow,
+                    extra: ChatStrategy.voice
+                  ),
                   style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14.r),

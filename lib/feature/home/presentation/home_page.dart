@@ -1,3 +1,4 @@
+import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -163,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                                 final chat = recentChats[index];
                                 return RecentChatTile(
                                   chat: chat,
-                                  onTap: () => context.go(RouteNames.camera),
+                                  onTap: () => context.go(RouteNames.chatFlow),
                                 )
                                     .animate()
                                     .fadeIn(
@@ -198,7 +199,10 @@ class _HomePageState extends State<HomePage> {
                           width: double.infinity,
                           height: 52.h,
                           child: OutlinedButton.icon(
-                            onPressed: () => context.go(RouteNames.camera),
+                            onPressed: () => context.go(
+                              RouteNames.chatFlow,
+                              extra: ChatStrategy.voice
+                            ),
                             style: OutlinedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(14.r),
@@ -229,7 +233,10 @@ class _HomePageState extends State<HomePage> {
                         HomePrimaryButton(
                           label: 'Yeni Sohbet Başlat',
                           icon: Icons.chat_bubble_outline,
-                          onTap: () => context.go(RouteNames.camera),
+                          onTap: () => context.go(
+                            RouteNames.chatFlow,
+                            extra: ChatStrategy.text
+                          ),
                         ),
                       ],
                     ).animate().fadeIn(duration: 250.ms).slideY(begin: 0.10, end: 0, duration: 250.ms),

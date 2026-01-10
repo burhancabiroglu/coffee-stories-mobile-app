@@ -10,18 +10,14 @@ final class RouteNames {
   static const creditPurchase = '/credits/purchase';
   static const creditsFinished = '/credits/finished';
 
-  static const camera = '/camera';
-  static const photoReview = '/photo-review';
-
-  static const chat = '/chat';
-  static const voiceChat = '/voice-chat';
-  static const conversationEnd = '/conversation-end';
-
-  // Chat flow (nested / recommended)
+  // Chat Flow parent route
+  static const chatFlow = '/chat';
+  // Chat Flow child routes (nested under /chat)
   static const chatCamera = '/chat/camera';
+  static const chatPhotoReview = '/chat/photo-review';
   static const chatText = '/chat/text';
   static const chatVoice = '/chat/voice';
-  static const chatEnd = '/chat/end';
+  static const chatResult = '/chat/result';
 
   static const settings = '/settings';
 

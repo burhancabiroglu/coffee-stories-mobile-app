@@ -1,21 +1,28 @@
-import 'package:coffeestories/feature/auth/presentation/register/register_page.dart';
 import 'package:go_router/go_router.dart';
-import '../../feature/auth/presentation/login/login_page.dart';
-import '../../feature/credit/presentation/credit_purchase_page.dart';
-import '../../feature/home/presentation/home_page.dart';
-import '../../feature/settings/presentation/help/help_page.dart';
-import '../../feature/settings/presentation/notification/notification_page.dart';
-import '../../feature/settings/presentation/policy/policy_page.dart';
-import '../../feature/settings/presentation/privacy/privacy_page.dart';
-import '../../feature/settings/presentation/profile/profile_page.dart';
-import '../../feature/settings/presentation/settings/settings_page.dart';
-import '../../feature/settings/presentation/terms/terms_page.dart';
+
 import 'route_names.dart';
 import 'app_flow_cubit.dart';
 import 'go_router_refresh_stream.dart';
 
-import '../../feature/auth/presentation/splash/splash_page.dart';
-import '../../feature/auth/presentation/onboarding/onboarding_page.dart';
+import 'package:coffeestories/feature/auth/presentation/register/register_page.dart';
+import 'package:coffeestories/feature/auth/presentation/login/login_page.dart';
+import 'package:coffeestories/feature/credit/presentation/credit_purchase_page.dart';
+import 'package:coffeestories/feature/home/presentation/home_page.dart';
+import 'package:coffeestories/feature/settings/presentation/help/help_page.dart';
+import 'package:coffeestories/feature/settings/presentation/notification/notification_page.dart';
+import 'package:coffeestories/feature/settings/presentation/policy/policy_page.dart';
+import 'package:coffeestories/feature/settings/presentation/privacy/privacy_page.dart';
+import 'package:coffeestories/feature/settings/presentation/profile/profile_page.dart';
+import 'package:coffeestories/feature/settings/presentation/settings/settings_page.dart';
+import 'package:coffeestories/feature/settings/presentation/terms/terms_page.dart';
+import 'package:coffeestories/feature/auth/presentation/splash/splash_page.dart';
+import 'package:coffeestories/feature/auth/presentation/onboarding/onboarding_page.dart';
+import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_page.dart';
+import 'package:coffeestories/feature/chat/presentation/camera/camera_page.dart';
+import 'package:coffeestories/feature/chat/presentation/photo_review/photo_review_page.dart';
+import 'package:coffeestories/feature/chat/presentation/text_chat/text_chat_page.dart';
+import 'package:coffeestories/feature/chat/presentation/voice_chat/voice_chat_page.dart';
+import 'package:coffeestories/feature/chat/presentation/conversation_end/conversation_end_page.dart';
 
 
 GoRouter createRouter(AppFlowCubit flow) {
@@ -75,33 +82,32 @@ GoRouter createRouter(AppFlowCubit flow) {
           path: RouteNames.creditPurchase,
           builder: (_, __) => const CreditPurchasePage(),
         ),
-        // GoRoute(
-        //   path: RouteNames.creditsFinished,
-        //   builder: (_, __) => const CreditsFinishedPage(),
-        // ),
-        //
-        // GoRoute(
-        //   path: RouteNames.camera,
-        //   builder: (_, __) => const CameraPage(),
-        // ),
-        // GoRoute(
-        //   path: RouteNames.photoReview,
-        //   builder: (_, __) => const PhotoReviewPage(),
-        // ),
-        //
-        // GoRoute(
-        //   path: RouteNames.chat,
-        //   builder: (_, __) => const ChatPage(),
-        // ),
-        // GoRoute(
-        //   path: RouteNames.voiceChat,
-        //   builder: (_, __) => const VoiceChatPage(),
-        // ),
-        // GoRoute(
-        //   path: RouteNames.conversationEnd,
-        //   builder: (_, __) => const ConversationEndPage(),
-        // ),
-        //
+        GoRoute(
+          path: RouteNames.chatFlow,
+          builder: (_, __) => const ChatFlowPage(),
+          routes: [
+            GoRoute(
+              path: 'camera',
+              builder: (_, __) => const CameraPage(),
+            ),
+            GoRoute(
+              path: 'photo-review',
+              builder: (_, __) => const PhotoReviewPage(),
+            ),
+            GoRoute(
+              path: 'text',
+              builder: (_, __) => TextChatPage(),
+            ),
+            GoRoute(
+              path: 'voice',
+              builder: (_, __) => VoiceChatPage(),
+            ),
+            GoRoute(
+              path: 'result',
+              builder: (_, __) => ConversationEndPage(),
+            ),
+          ],
+        ),
         GoRoute(
           path: RouteNames.settings,
           builder: (_, __) => const SettingsPage(),

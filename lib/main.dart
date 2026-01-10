@@ -1,3 +1,4 @@
+import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_cubit.dart';
 import 'package:coffeestories/feature/home/presentation/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:coffeestories/app/theme/app_theme.dart';
@@ -51,6 +52,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<HomeCubit>(create: (_) => HomeCubit(repo: injector())),
         BlocProvider<SettingsCubit>(create: (_) => SettingsCubit(repo: injector())),
         BlocProvider<CreditPurchaseCubit>(create: (_) => CreditPurchaseCubit(repo: injector(), ads: injector())),
+        BlocProvider<ChatFlowCubit>(create: (_) => ChatFlowCubit()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(393, 852), // iPhone 16 logical size
