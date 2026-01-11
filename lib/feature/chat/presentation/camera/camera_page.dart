@@ -31,12 +31,10 @@ class _CameraPageState extends State<CameraPage> {
   // --- Coffee AI – Light Twilight (local to this screen) ---
   static const bool _useLightTwilight = true;
 
-  // Background gradient (very soft)
-  Color get _bgTop => const Color(0xFFFAF7F2);
-
-  Color get _bgMid => const Color(0xFFF4F1ED);
-
-  Color get _bgBottom => const Color(0xFFFFFFFF);
+  // Background gradient (refined AI Twilight + Coffee)
+  Color get _bgTop => const Color(0xFFF6F1EB);
+  Color get _bgMid => const Color(0xFFEFE5D8);
+  Color get _bgBottom => const Color(0xFFEAF1F6);
 
   // Text
   Color get _fg => AppColors.foreground;
@@ -44,7 +42,7 @@ class _CameraPageState extends State<CameraPage> {
   Color get _muted => AppColors.foreground.withAlpha(166);
 
   // Glass surfaces
-  Color get _glassBg => Colors.white.withAlpha(218); // ~0.85
+  Color get _glassBg => Colors.white.withAlpha(230); // ~0.90
   Color get _glassBorder => Colors.black.withAlpha(12); // ~0.05
 
   // Accents
@@ -309,8 +307,8 @@ class _CameraPageState extends State<CameraPage> {
                 border: Border.all(color: _glassBorder, width: 1),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withAlpha(10),
-                    blurRadius: 24,
+                    color: Colors.black.withAlpha(14),
+                    blurRadius: 36,
                     offset: const Offset(0, 14),
                   ),
                 ],
@@ -318,16 +316,37 @@ class _CameraPageState extends State<CameraPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    width: 68.w,
-                    height: 68.w,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _coffee.withAlpha(20),
-                    ),
+                  // Camera icon with subtle radial AI glow
+                  Stack(
                     alignment: Alignment.center,
-                    child: Icon(Icons.photo_camera_outlined, size: 34.sp,
-                        color: _coffee),
+                    children: [
+                      Positioned.fill(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: RadialGradient(
+                              colors: [
+                                _aiCyan.withAlpha(40),
+                                Colors.transparent,
+                              ],
+                              center: Alignment.center,
+                              radius: 0.85,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 68.w,
+                        height: 68.w,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _coffee.withAlpha(20),
+                        ),
+                        alignment: Alignment.center,
+                        child: Icon(Icons.photo_camera_outlined, size: 34.sp,
+                            color: _coffee),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 14.h),
                   Text(
@@ -360,8 +379,8 @@ class _CameraPageState extends State<CameraPage> {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: _aiCyan.withAlpha(60),
-                            blurRadius: 18,
+                            color: _aiCyan.withAlpha(90),
+                            blurRadius: 28,
                             offset: const Offset(0, 10),
                           ),
                         ],
@@ -411,9 +430,9 @@ class _CameraPageState extends State<CameraPage> {
                     Container(
                       padding: EdgeInsets.all(14.w),
                       decoration: BoxDecoration(
-                        color: _aiCyan.withAlpha(10),
+                        color: _aiCyan.withAlpha(14),
                         borderRadius: BorderRadius.circular(14.r),
-                        border: Border.all(color: _aiCyan.withAlpha(35),
+                        border: Border.all(color: _aiCyan.withAlpha(50),
                             width: 1),
                       ),
                       child: Text(
