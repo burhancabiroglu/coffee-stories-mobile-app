@@ -39,11 +39,13 @@ final class AppColors {
   static const ring = Color(0xFF8B5A3C); // --ring
 
   // AI subtle accents (gradient / highlights)
-  static const aiCyan = Color(0xFF60D5DC);
+  static const aiCyan = Color(0xFF5EC6E8);
   static const aiBlue = Color(0xFF4A90E2);
   static const aiPurple = Color(0xFF9B59B6);
   static const aiPink = Color(0xFFE88CAE);
 
   /// A handy outline color used across components.
   static const outline = border;
+
+  static const coffee = Color(0xFF8B5A3C);
 }

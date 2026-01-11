@@ -24,8 +24,19 @@ class PrimaryButton extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.symmetric(vertical: 16.h),
         decoration: BoxDecoration(
-          color: AppColors.primary,
           borderRadius: BorderRadius.circular(12.r),
+          gradient: const LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [ AppColors.coffee, AppColors.coffee],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.coffee.withAlpha(90),
+              blurRadius: 28,
+              offset: const Offset(0, 10),
+            ),
+          ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

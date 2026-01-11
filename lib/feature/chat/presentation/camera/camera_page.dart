@@ -44,10 +44,6 @@ class _CameraPageState extends State<CameraPage> {
   Color get _glassBg => Colors.white.withAlpha(230); // ~0.90
   Color get _glassBorder => Colors.black.withAlpha(12); // ~0.05
 
-  // Accents
-  static const Color _aiCyan = Color(0xFF5EC6E8);
-  static const Color _coffee = Color(0xFF8B5A3C);
-
   @override
   void initState() {
     super.initState();
@@ -234,7 +230,7 @@ class _CameraPageState extends State<CameraPage> {
     if (_initializing) {
       return Center(
         child: CircularProgressIndicator.adaptive(
-          valueColor: AlwaysStoppedAnimation<Color>(_coffee),
+          valueColor: AlwaysStoppedAnimation<Color>(AppColors.coffee),
         ),
       );
     }
@@ -272,7 +268,7 @@ class _CameraPageState extends State<CameraPage> {
                             shape: BoxShape.circle,
                             gradient: RadialGradient(
                               colors: [
-                                _aiCyan.withAlpha(40),
+                                AppColors.aiCyan.withAlpha(40),
                                 Colors.transparent,
                               ],
                               center: Alignment.center,
@@ -286,11 +282,11 @@ class _CameraPageState extends State<CameraPage> {
                         height: 68.w,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _coffee.withAlpha(20),
+                          color: AppColors.coffee.withAlpha(20),
                         ),
                         alignment: Alignment.center,
                         child: Icon(Icons.photo_camera_outlined, size: 34.sp,
-                            color: _coffee),
+                            color: AppColors.coffee),
                       ),
                     ],
                   ),
@@ -314,18 +310,18 @@ class _CameraPageState extends State<CameraPage> {
                   // Primary CTA: AI cyan → coffee
                   SizedBox(
                     width: double.infinity,
-                    height: 56.h,
+                    height: 52.h,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16.r),
                         gradient: const LinearGradient(
                           begin: Alignment.centerLeft,
                           end: Alignment.centerRight,
-                          colors: [_aiCyan, _coffee],
+                          colors: [AppColors.aiCyan, AppColors.coffee],
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: _aiCyan.withAlpha(90),
+                            color: AppColors.aiCyan.withAlpha(90),
                             blurRadius: 28,
                             offset: const Offset(0, 10),
                           ),
@@ -351,17 +347,18 @@ class _CameraPageState extends State<CameraPage> {
                       ),
                     ),
                   ),
+
                   SizedBox(height: 12.h),
 
                   // Secondary
                   SizedBox(
                     width: double.infinity,
-                    height: 56.h,
+                    height: 52.h,
                     child: OutlinedButton(
                       onPressed: _cancel,
                       style: OutlinedButton.styleFrom(
                         foregroundColor: _fg,
-                        side: BorderSide(color: _coffee.withAlpha(60),
+                        side: BorderSide(color: AppColors.coffee.withAlpha(60),
                             width: 1),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius
                             .circular(16.r)),
@@ -376,9 +373,9 @@ class _CameraPageState extends State<CameraPage> {
                     Container(
                       padding: EdgeInsets.all(14.w),
                       decoration: BoxDecoration(
-                        color: _aiCyan.withAlpha(14),
+                        color: AppColors.aiCyan.withAlpha(14),
                         borderRadius: BorderRadius.circular(14.r),
-                        border: Border.all(color: _aiCyan.withAlpha(50),
+                        border: Border.all(color: AppColors.aiCyan.withAlpha(50),
                             width: 1),
                       ),
                       child: Text(
@@ -451,7 +448,7 @@ class _CameraPageState extends State<CameraPage> {
                   onTap: _cancel,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: _coffee.withAlpha(14),
+                      color: AppColors.coffee.withAlpha(14),
                       shape: BoxShape.circle,
                     ),
                     alignment: Alignment.center,
@@ -498,7 +495,7 @@ class _CameraPageState extends State<CameraPage> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
-              border: Border.all(color: _coffee.withAlpha(60), width: 2),
+              border: Border.all(color: AppColors.coffee.withAlpha(60), width: 2),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withAlpha(12),
