@@ -4,13 +4,11 @@ import 'dart:ui' as ui;
 
 import 'package:camera/camera.dart';
 import 'package:coffeestories/app/theme/app_colors.dart';
-import 'package:coffeestories/core/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../widgets/build_widgets.dart';
 import '../chat_flow/chat_flow_cubit.dart';
 import '../chat_flow/chat_flow_state.dart';
 
@@ -29,6 +27,29 @@ class _CameraPageState extends State<CameraPage> {
 
   String _error = '';
   bool _permissionDenied = false;
+
+  // --- Coffee AI – Light Twilight (local to this screen) ---
+  static const bool _useLightTwilight = true;
+
+  // Background gradient (very soft)
+  Color get _bgTop => const Color(0xFFFAF7F2);
+
+  Color get _bgMid => const Color(0xFFF4F1ED);
+
+  Color get _bgBottom => const Color(0xFFFFFFFF);
+
+  // Text
+  Color get _fg => AppColors.foreground;
+
+  Color get _muted => AppColors.foreground.withAlpha(166);
+
+  // Glass surfaces
+  Color get _glassBg => Colors.white.withAlpha(218); // ~0.85
+  Color get _glassBorder => Colors.black.withAlpha(12); // ~0.05
+
+  // Accents
+  static const Color _aiCyan = Color(0xFF5EC6E8);
+  static const Color _coffee = Color(0xFF8B5A3C);
 
   @override
   void initState() {
@@ -58,7 +79,8 @@ class _CameraPageState extends State<CameraPage> {
       final cams = await availableCameras();
       final back = cams.firstWhere(
             (c) => c.lensDirection == CameraLensDirection.back,
-        orElse: () => cams.isNotEmpty ? cams.first : throw StateError('No camera found'),
+        orElse: () =>
+        cams.isNotEmpty ? cams.first : throw StateError('No camera found'),
       );
 
       final controller = CameraController(
@@ -92,7 +114,8 @@ class _CameraPageState extends State<CameraPage> {
       setState(() {
         _permissionDenied = true;
         _initializing = false;
-        _error = 'Kamera erişiminde bir hata oluştu. Demo fotoğraf kullanabilirsiniz.';
+        _error =
+        'Kamera erişiminde bir hata oluştu. Demo fotoğraf kullanabilirsiniz.';
       });
     }
   }
@@ -127,7 +150,8 @@ class _CameraPageState extends State<CameraPage> {
     } catch (_) {
       if (!mounted) return;
       setState(() {
-        _error = 'Fotoğraf çekilemedi. Tekrar deneyin veya demo fotoğraf kullanın.';
+        _error =
+        'Fotoğraf çekilemedi. Tekrar deneyin veya demo fotoğraf kullanın.';
         _permissionDenied = false;
       });
     }
@@ -169,7 +193,8 @@ class _CameraPageState extends State<CameraPage> {
     canvas.drawRect(const Rect.fromLTWH(0, 0, w, h), bgPaint);
 
     // cup circle
-    final cupPaint = Paint()..color = const Color(0xFFD4C4B0);
+    final cupPaint = Paint()
+      ..color = const Color(0xFFD4C4B0);
     canvas.drawCircle(const Offset(w / 2, h / 2), 200, cupPaint);
 
     // emoji / icon text
@@ -179,15 +204,19 @@ class _CameraPageState extends State<CameraPage> {
         style: TextStyle(fontSize: 80),
       ),
       textDirection: TextDirection.ltr,
-    )..layout();
-    textPainter.paint(canvas, Offset(w / 2 - textPainter.width / 2, h / 2 - textPainter.height / 2));
+    )
+      ..layout();
+    textPainter.paint(canvas,
+        Offset(w / 2 - textPainter.width / 2, h / 2 - textPainter.height / 2));
 
     final picture = recorder.endRecording();
     final image = await picture.toImage(w.toInt(), h.toInt());
     final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
 
     final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/mock_coffee_${DateTime.now().millisecondsSinceEpoch}.png');
+    final file = File('${dir.path}/mock_coffee_${DateTime
+        .now()
+        .millisecondsSinceEpoch}.png');
     await file.writeAsBytes(bytes!.buffer.asUint8List(), flush: true);
     return file.path;
   }
@@ -206,18 +235,50 @@ class _CameraPageState extends State<CameraPage> {
         if (!isCameraStep) return const SizedBox.shrink();
 
         return Scaffold(
-          backgroundColor: AppColors.foreground, // bg-foreground
-          body: SafeArea(
-            top: false,
-            child: Stack(
-              children: [
-                Positioned.fill(child: buildCameraBody()),
-                buildHeader(_cancel),
-                if (_error.isEmpty) buildGuideFrame(),
-                if (_error.isEmpty) buildWarmOverlay(),
-                if (_error.isEmpty) buildBottomControls(_capture),
-                if (_error.isEmpty) buildInfoText(),
-              ],
+          backgroundColor: Colors.transparent,
+          body: Container(
+            decoration: BoxDecoration(
+              gradient: _useLightTwilight
+                  ? LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [_bgTop, _bgMid, _bgBottom],
+              )
+                  : null,
+              color: _useLightTwilight ? null : AppColors.background,
+            ),
+            child: SafeArea(
+              top: false,
+              child: Stack(
+                children: [
+                  Positioned.fill(child: buildCameraBody()),
+
+                  // Soft tint over camera preview for legibility
+                  if (_error.isEmpty)
+                    Positioned.fill(
+                      child: IgnorePointer(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                _bgTop.withAlpha(70),
+                                Colors.transparent,
+                                const Color(0xFF8B5A3C).withAlpha(35),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  _buildHeaderLight(),
+                  if (_error.isEmpty) _buildGuideFrameLight(),
+                  if (_error.isEmpty) _buildBottomControlsLight(),
+                  if (_error.isEmpty) _buildInfoTextLight(),
+                ],
+              ),
             ),
           ),
         );
@@ -229,7 +290,7 @@ class _CameraPageState extends State<CameraPage> {
     if (_initializing) {
       return Center(
         child: CircularProgressIndicator.adaptive(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white.withAlpha(220)),
+          valueColor: AlwaysStoppedAnimation<Color>(_coffee),
         ),
       );
     }
@@ -240,65 +301,132 @@ class _CameraPageState extends State<CameraPage> {
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 420.w),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.photo_camera_outlined, size: 64.sp, color: Colors.white.withAlpha(120)),
-                SizedBox(height: 16.h),
-                Text(
-                  'Kamera Erişilemedi',
-                  style: TextStyle(color: Colors.white, fontSize: 18.sp, fontWeight: FontWeight.w800),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 10.h),
-                Text(
-                  _error,
-                  style: TextStyle(color: Colors.white.withAlpha(200), fontSize: 13.sp, height: 1.45),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 16.h),
-
-                SizedBox(
-                  width: double.infinity,
-                  height: 56.h,
-                  child: PrimaryButton(
-                    onTap: _useMockPhoto,
-                    icon: Icons.image_outlined,
-                    label: 'Demo Fotoğraf Kullan',
-                  ),
-                ),
-                SizedBox(height: 12.h),
-                SizedBox(
-                  width: double.infinity,
-                  height: 56.h,
-                  child: OutlinedButton(
-                    onPressed: _cancel,
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      side: BorderSide(color: Colors.white.withAlpha(40), width: 1),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-                    ),
-                    child: Text('Geri Dön', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
-                  ),
-                ),
-
-                if (_permissionDenied) ...[
-                  SizedBox(height: 14.h),
-                  Container(
-                    padding: EdgeInsets.all(14.w),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withAlpha(18),
-                      borderRadius: BorderRadius.circular(14.r),
-                      border: Border.all(color: Colors.white.withAlpha(30), width: 1),
-                    ),
-                    child: Text(
-                      '💡 İpucu: Telefon ayarlarınızdan uygulama için Kamera iznini açabilirsiniz.',
-                      style: TextStyle(color: Colors.white.withAlpha(180), fontSize: 12.sp, height: 1.4),
-                      textAlign: TextAlign.center,
-                    ),
+            child: Container(
+              padding: EdgeInsets.all(18.w),
+              decoration: BoxDecoration(
+                color: _glassBg,
+                borderRadius: BorderRadius.circular(20.r),
+                border: Border.all(color: _glassBorder, width: 1),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withAlpha(10),
+                    blurRadius: 24,
+                    offset: const Offset(0, 14),
                   ),
                 ],
-              ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 68.w,
+                    height: 68.w,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _coffee.withAlpha(20),
+                    ),
+                    alignment: Alignment.center,
+                    child: Icon(Icons.photo_camera_outlined, size: 34.sp,
+                        color: _coffee),
+                  ),
+                  SizedBox(height: 14.h),
+                  Text(
+                    'Kamera Erişilemedi',
+                    style: TextStyle(color: _fg,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w800),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 10.h),
+                  Text(
+                    _error,
+                    style: TextStyle(
+                        color: _muted, fontSize: 13.sp, height: 1.45),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 16.h),
+
+                  // Primary CTA: AI cyan → coffee
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56.h,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16.r),
+                        gradient: const LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [_aiCyan, _coffee],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: _aiCyan.withAlpha(60),
+                            blurRadius: 18,
+                            offset: const Offset(0, 10),
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton.icon(
+                        onPressed: _useMockPhoto,
+                        icon: Icon(Icons.image_outlined, size: 20.sp,
+                            color: Colors.white),
+                        label: Text(
+                          'Demo Fotoğraf Kullan',
+                          style: TextStyle(fontSize: 16.sp,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.r)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 12.h),
+
+                  // Secondary
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56.h,
+                    child: OutlinedButton(
+                      onPressed: _cancel,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: _fg,
+                        side: BorderSide(color: _coffee.withAlpha(60),
+                            width: 1),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius
+                            .circular(16.r)),
+                      ),
+                      child: Text('Geri Dön', style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w700)),
+                    ),
+                  ),
+
+                  if (_permissionDenied) ...[
+                    SizedBox(height: 14.h),
+                    Container(
+                      padding: EdgeInsets.all(14.w),
+                      decoration: BoxDecoration(
+                        color: _aiCyan.withAlpha(10),
+                        borderRadius: BorderRadius.circular(14.r),
+                        border: Border.all(color: _aiCyan.withAlpha(35),
+                            width: 1),
+                      ),
+                      child: Text(
+                        '💡 İpucu: Telefon ayarlarınızdan uygulama için Kamera iznini açabilirsiniz.',
+                        style: TextStyle(color: _muted,
+                            fontSize: 12.sp,
+                            height: 1.4),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
             ),
           ),
         ),
@@ -315,5 +443,143 @@ class _CameraPageState extends State<CameraPage> {
     );
   }
 
+  Widget _buildHeaderLight() {
+    return Positioned(
+      top: 0,
+      left: 0,
+      right: 0,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(16.w, 56.h, 16.w, 12.h),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
+          decoration: BoxDecoration(
+            color: _glassBg,
+            borderRadius: BorderRadius.circular(18.r),
+            border: Border.all(color: _glassBorder, width: 1),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Kahve Fotoğrafı',
+                      style: TextStyle(color: _fg,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w800),
+                    ),
+                    SizedBox(height: 2.h),
+                    Text(
+                      'Fincanınızın fotoğrafını çekin',
+                      style: TextStyle(
+                          color: _muted, fontSize: 12.sp, height: 1.25),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 44.w,
+                height: 44.w,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(999),
+                  onTap: _cancel,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: _coffee.withAlpha(14),
+                      shape: BoxShape.circle,
+                    ),
+                    alignment: Alignment.center,
+                    child: Icon(Icons.close_rounded, size: 22.sp, color: _fg),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
+  Widget _buildGuideFrameLight() {
+    return Positioned.fill(
+      child: IgnorePointer(
+        child: Center(
+          child: Container(
+            width: 260.w,
+            height: 260.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white.withAlpha(120), width: 3),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBottomControlsLight() {
+    return Positioned(
+      left: 0,
+      right: 0,
+      bottom: 64.h,
+      child: Center(
+        child: InkWell(
+          borderRadius: BorderRadius.circular(999),
+          onTap: _capture,
+          child: Container(
+            width: 82.w,
+            height: 82.w,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              border: Border.all(color: _coffee.withAlpha(60), width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha(12),
+                  blurRadius: 18,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            alignment: Alignment.center,
+            child: Container(
+              width: 64.w,
+              height: 64.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: _fg.withAlpha(80), width: 3),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoTextLight() {
+    return Positioned(
+      left: 0,
+      right: 0,
+      bottom: 18.h,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
+        child: Center(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+            decoration: BoxDecoration(
+              color: _glassBg,
+              borderRadius: BorderRadius.circular(14.r),
+              border: Border.all(color: _glassBorder, width: 1),
+            ),
+            child: Text(
+              'Fincanınızı daire içine yerleştirin ve fotoğrafı çekin',
+              style: TextStyle(color: _muted, fontSize: 12.sp, height: 1.25),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

@@ -238,7 +238,7 @@ class _TextChatPageState extends State<TextChatPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              'AI Asistan',
+                              'AI Genie',
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                     color: AppColors.foreground,
                                     fontSize: 15.sp,
@@ -426,7 +426,7 @@ class _TextChatPageState extends State<TextChatPage> {
                                 color: isUser ? AppColors.onPrimary : AppColors.foreground,
                                 fontSize: 14.sp,
                                 height: 1.35,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                             SizedBox(height: 6.h),
@@ -434,7 +434,7 @@ class _TextChatPageState extends State<TextChatPage> {
                               _formatTime(m.timestamp),
                               style: TextStyle(
                                 fontSize: 11.sp,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w400,
                                 color: isUser
                                     ? AppColors.onPrimary.withAlpha(180)
                                     : _mutedFg,
@@ -467,30 +467,34 @@ class _TextChatPageState extends State<TextChatPage> {
                     children: [
                       SizedBox(width: 10.w),
                       Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: _mutedBg,
-                            borderRadius: BorderRadius.circular(999),
-                            border: Border.all(color: _borderColor, width: 1),
+                        child: TextField(
+                          controller: _inputController,
+                          onChanged: (_) => setState(() {}),
+                          onSubmitted: (_) {},
+                          textInputAction: TextInputAction.newline,
+                          minLines: 1,
+                          maxLines: 4,
+                          style: TextStyle(
+                            color: AppColors.foreground,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 12.w),
-                          child: TextField(
-                            controller: _inputController,
-                            onChanged: (_) => setState(() {}),
-                            onSubmitted: (_) {},
-                            textInputAction: TextInputAction.newline,
-                            minLines: 1,
-                            maxLines: 4,
-                            style: TextStyle(
-                              color: AppColors.foreground,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
+                          decoration: InputDecoration(
+                            hintText: 'Mesajınızı yazın...',
+                            hintStyle: TextStyle(color: _mutedFg, fontSize: 14.sp),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: _borderColor,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(999),
                             ),
-                            decoration: InputDecoration(
-                              hintText: 'Mesajınızı yazın...',
-                              hintStyle: TextStyle(color: _mutedFg, fontSize: 14.sp),
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: _borderColor,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(999),
                             ),
                           ),
                         ),
