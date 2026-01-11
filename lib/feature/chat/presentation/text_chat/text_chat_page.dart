@@ -180,22 +180,22 @@ class _TextChatPageState extends State<TextChatPage> {
           children: [
             // Header (Settings diline yakın)
             Container(
-              padding: EdgeInsets.fromLTRB(24.w, 64.h, 24.w, 16.h),
+              padding: EdgeInsets.fromLTRB(20.w, 60.h, 20.w, 14.h),
               decoration: BoxDecoration(
-                color: _cardBg,
+                color: _cardBg.withAlpha(245),
                 border: Border(bottom: BorderSide(color: _borderColor, width: 1)),
               ),
               child: Row(
                 children: [
                   SizedBox(
-                    width: 44.w,
-                    height: 44.w,
+                    width: 40.w,
+                    height: 40.w,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(999),
                       onTap: chatFlowCubit.cancelFlow,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: AppColors.foreground.withAlpha(16),
+                          color: AppColors.foreground.withAlpha(12),
                           shape: BoxShape.circle,
                         ),
                         alignment: Alignment.center,
@@ -212,8 +212,8 @@ class _TextChatPageState extends State<TextChatPage> {
                     child: Row(
                       children: [
                         Container(
-                          width: 40.w,
-                          height: 40.w,
+                          width: 34.w,
+                          height: 34.w,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: LinearGradient(
@@ -227,8 +227,8 @@ class _TextChatPageState extends State<TextChatPage> {
                           ),
                           alignment: Alignment.center,
                           child: Icon(
-                            Icons.coffee,
-                            size: 18.sp,
+                            Icons.local_cafe_outlined,
+                            size: 16.sp,
                             color: Colors.white,
                           ),
                         ),
@@ -241,8 +241,8 @@ class _TextChatPageState extends State<TextChatPage> {
                               'AI Asistan',
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                     color: AppColors.foreground,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w800,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w700,
                                   ),
                             ),
                             SizedBox(height: 2.h),
@@ -250,16 +250,16 @@ class _TextChatPageState extends State<TextChatPage> {
                                 ? _gradientText(
                                     'yazıyor...',
                                     Theme.of(context).textTheme.bodySmall?.copyWith(
-                                          fontSize: 12.sp,
+                                          fontSize: 11.sp,
                                           fontWeight: FontWeight.w700,
                                         ) ??
-                                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w700),
+                                        TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w700),
                                   )
                                 : Text(
                                     'çevrimiçi',
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                           color: _mutedFg,
-                                          fontSize: 12.sp,
+                                          fontSize: 11.sp,
                                           fontWeight: FontWeight.w600,
                                         ),
                                   ),
@@ -318,7 +318,7 @@ class _TextChatPageState extends State<TextChatPage> {
             Expanded(
               child: ListView.builder(
                 controller: _scrollController,
-                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 16.h),
                 itemCount: _messages.length + (_isTyping ? 1 : 0) + 1, // + bottom spacer
                 itemBuilder: (context, i) {
                   // bottom spacer
@@ -406,6 +406,15 @@ class _TextChatPageState extends State<TextChatPage> {
                                   bottomRight: Radius.circular(18.r),
                                 ),
                           border: isUser ? null : Border.all(color: _borderColor, width: 1),
+                          boxShadow: isUser
+                              ? null
+                              : [
+                                  BoxShadow(
+                                    color: Colors.black.withAlpha(10),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -447,7 +456,7 @@ class _TextChatPageState extends State<TextChatPage> {
             Container(
               padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 16.h),
               decoration: BoxDecoration(
-                color: _cardBg,
+                color: AppColors.background,
                 border: Border(top: BorderSide(color: _borderColor, width: 1)),
               ),
               child: Column(
@@ -456,43 +465,20 @@ class _TextChatPageState extends State<TextChatPage> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      SizedBox(
-                        width: 44.w,
-                        height: 44.w,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(999),
-                          onTap: () {
-                            // TODO: attach / photo action (UI only)
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: _mutedBg,
-                              shape: BoxShape.circle,
-                              border: Border.all(color: _borderColor, width: 1),
-                            ),
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Icons.image_outlined,
-                              size: 20.sp,
-                              color: AppColors.foreground,
-                            ),
-                          ),
-                        ),
-                      ),
                       SizedBox(width: 10.w),
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
                             color: _mutedBg,
-                            borderRadius: BorderRadius.circular(18.r),
+                            borderRadius: BorderRadius.circular(999),
                             border: Border.all(color: _borderColor, width: 1),
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 14.w),
+                          padding: EdgeInsets.symmetric(horizontal: 12.w),
                           child: TextField(
                             controller: _inputController,
                             onChanged: (_) => setState(() {}),
-                            onSubmitted: (_) => _send(),
-                            textInputAction: TextInputAction.send,
+                            onSubmitted: (_) {},
+                            textInputAction: TextInputAction.newline,
                             minLines: 1,
                             maxLines: 4,
                             style: TextStyle(
@@ -504,6 +490,7 @@ class _TextChatPageState extends State<TextChatPage> {
                               hintText: 'Mesajınızı yazın...',
                               hintStyle: TextStyle(color: _mutedFg, fontSize: 14.sp),
                               border: InputBorder.none,
+                              focusedBorder: InputBorder.none
                             ),
                           ),
                         ),
