@@ -30,7 +30,7 @@ class PackageTile extends StatelessWidget {
       borderRadius: BorderRadius.circular(24.r), // rounded-2xl
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(20.w), // p-5
+        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w), // p-5
         decoration: BoxDecoration(
           color: cardBg,
           borderRadius: BorderRadius.circular(24.r),
@@ -97,7 +97,7 @@ class PackageTile extends StatelessWidget {
                             color: AppColors.foreground,
                           ),
                         ),
-                        SizedBox(height: 4.h),
+                        SizedBox(height: 2.h),
                         Text(
                           '${package.approxChats} sohbet hakkı',
                           style: TextStyle(

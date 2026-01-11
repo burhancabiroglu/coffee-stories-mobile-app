@@ -1,3 +1,4 @@
+import 'package:coffeestories/core/widgets/primary_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -75,70 +76,7 @@ class _SettingsPageState extends State<SettingsPage> {
         child: Column(
           children: [
             // Header
-            Container(
-              padding: EdgeInsets.fromLTRB(24.w, 64.h, 24.w, 20.h),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: AppColors.foreground.withAlpha(20),
-                    width: 1,
-                  ),
-                ),
-              ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 44.w,
-                    height: 44.w,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(999),
-                      onTap: () {
-                        if (context.canPop()) {
-                          context.pop();
-                        } else {
-                          context.go(RouteNames.home);
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.foreground.withAlpha(16),
-                          shape: BoxShape.circle,
-                        ),
-                        alignment: Alignment.center,
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          size: 18.sp,
-                          color: AppColors.foreground,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 12.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Ayarlar',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: AppColors.foreground,
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      SizedBox(height: 2.h),
-                      Text(
-                        'Hesap ve tercihleriniz',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.foreground.withAlpha(166),
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
+            PrimaryAppBar(title: 'Ayarlar', subtitle: 'Hesap ve tercihleriniz'),
             // Content
             Expanded(
               child: ListView(

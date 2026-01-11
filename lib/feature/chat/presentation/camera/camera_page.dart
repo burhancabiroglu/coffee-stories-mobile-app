@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:camera/camera.dart';
 import 'package:coffeestories/app/theme/app_colors.dart';
+import 'package:coffeestories/core/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -260,16 +261,10 @@ class _CameraPageState extends State<CameraPage> {
                 SizedBox(
                   width: double.infinity,
                   height: 56.h,
-                  child: ElevatedButton.icon(
-                    onPressed: _useMockPhoto,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-                    ),
-                    icon: Icon(Icons.image_outlined, size: 20.sp),
-                    label: Text('Demo Fotoğraf Kullan', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w800)),
+                  child: PrimaryButton(
+                    onTap: _useMockPhoto,
+                    icon: Icons.image_outlined,
+                    label: 'Demo Fotoğraf Kullan',
                   ),
                 ),
                 SizedBox(height: 12.h),
@@ -283,7 +278,7 @@ class _CameraPageState extends State<CameraPage> {
                       side: BorderSide(color: Colors.white.withAlpha(40), width: 1),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
                     ),
-                    child: Text('Geri Dön', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w800)),
+                    child: Text('Geri Dön', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
                   ),
                 ),
 

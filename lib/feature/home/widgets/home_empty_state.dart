@@ -1,12 +1,12 @@
+import 'package:coffeestories/core/widgets/secondary_button.dart';
 import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_args.dart';
-import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/router/route_names.dart';
 import '../../../app/theme/app_colors.dart';
-import 'home_primary_button.dart';
+import '../../../core/widgets/primary_button.dart';
 
 class HomeEmptyState extends StatelessWidget {
   const HomeEmptyState();
@@ -59,49 +59,23 @@ class HomeEmptyState extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 24.h),
-
               // Primary: Yazılı Sohbet
-              HomePrimaryButton(
+              PrimaryButton(
                 label: 'Yazılı Sohbet',
                 icon: Icons.chat_bubble_outline,
                 onTap: () => context.push(
                   RouteNames.chatFlow,
-                  extra: ChatFlowArgs.text()
+                  extra: ChatFlowArgs.text(),
                 ),
               ),
               SizedBox(height: 12.h),
-
               // Secondary: Sesli Sohbet (outline)
-              SizedBox(
-                width: double.infinity,
-                height: 52.h,
-                child: OutlinedButton.icon(
-                  onPressed: () => context.push(
-                    RouteNames.chatFlow,
-                    extra: ChatFlowArgs.voice()
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14.r),
-                    ),
-                    side: BorderSide(
-                      color: AppColors.foreground.withOpacity(0.14),
-                      width: 1,
-                    ),
-                    backgroundColor: Colors.transparent,
-                    foregroundColor: AppColors.foreground,
-                  ),
-                  icon: Icon(
-                    Icons.mic_none,
-                    size: 20.sp,
-                  ),
-                  label: Text(
-                    'Sesli Sohbet',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+              SecondaryButton(
+                label: 'Sesli Sohbet',
+                icon: Icons.mic_none,
+                onTap: () => context.push(
+                  RouteNames.chatFlow,
+                  extra: ChatFlowArgs.voice(),
                 ),
               ),
             ],

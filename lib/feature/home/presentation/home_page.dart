@@ -1,5 +1,6 @@
+import 'package:coffeestories/core/widgets/primary_button.dart';
+import 'package:coffeestories/core/widgets/secondary_button.dart';
 import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_args.dart';
-import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +12,6 @@ import '../../../app/theme/app_colors.dart';
 import '../widgets/home_credit_card.dart';
 import '../widgets/home_empty_state.dart';
 import '../widgets/home_header.dart';
-import '../widgets/home_primary_button.dart';
 import '../widgets/recent_chat_tile.dart';
 import 'home_cubit.dart';
 import 'home_state.dart';
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                                 return RecentChatTile(
                                   chat: chat,
                                   onTap: () => context.push(
-                                      RouteNames.chatFlow,
+                                    RouteNames.chatFlow,
                                     extra: ChatFlowArgs.previous(id: "234234")
                                   ),
                                 )
@@ -197,44 +197,19 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 24.h),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
+                      spacing: 12.h,
                       children: [
                         // Secondary: Sesli Sohbet
-                        SizedBox(
-                          width: double.infinity,
-                          height: 52.h,
-                          child: OutlinedButton.icon(
-                            onPressed: () => context.push(
-                              RouteNames.chatFlow,
-                              extra: ChatFlowArgs.voice()
-                            ),
-                            style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14.r),
-                              ),
-                              side: BorderSide(
-                                color: AppColors.foreground.withAlpha(36), // 0.14 * 255 ≈ 36
-                                width: 1,
-                              ),
-                              backgroundColor: Colors.transparent,
-                              foregroundColor: AppColors.foreground,
-                            ),
-                            icon: Icon(
-                              Icons.mic_none,
-                              size: 20.sp,
-                            ),
-                            label: Text(
-                              'Sesli Sohbet Başlat',
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
+                        SecondaryButton(
+                          label: 'Sesli Sohbet Başlat',
+                          icon: Icons.mic_none,
+                          onTap: () => context.push(
+                            RouteNames.chatFlow,
+                            extra: ChatFlowArgs.voice()
+                          )
                         ),
-                        SizedBox(height: 12.h),
-
                         // Primary: Yeni Sohbet
-                        HomePrimaryButton(
+                        PrimaryButton(
                           label: 'Yeni Sohbet Başlat',
                           icon: Icons.chat_bubble_outline,
                           onTap: () => context.go(

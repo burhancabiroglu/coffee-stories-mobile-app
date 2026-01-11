@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 final class AppTypography {
-  /// İstersen pubspec ile font ekleyip buraya family yazarsın.
-  static const String? fontFamily = null; // e.g. "Inter"
+  static const String? fontFamily = "Inter";
 
   static TextTheme textTheme(Color foreground) {
     // Flutter Material 3 naming:

@@ -4,15 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../app/theme/app_colors.dart';
 
-class HomePrimaryButton extends StatelessWidget {
+class PrimaryButton extends StatelessWidget {
   final String label;
-  final IconData icon;
-  final VoidCallback onTap;
+  final IconData? icon;
+  final VoidCallback? onTap;
 
-  const HomePrimaryButton({
+  const PrimaryButton({
     required this.label,
-    required this.icon,
-    required this.onTap,
+    this.icon,
+    this.onTap,
   });
 
   @override
@@ -30,14 +30,16 @@ class HomePrimaryButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 18.sp, color: Colors.white),
-            SizedBox(width: 10.w),
+            if(icon != null) ...[
+              Icon(icon, size: 18.sp, color: Colors.white),
+              SizedBox(width: 10.w)
+            ],
             Text(
               label,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Colors.white,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],

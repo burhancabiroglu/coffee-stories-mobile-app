@@ -1,3 +1,5 @@
+import 'package:coffeestories/core/widgets/primary_button.dart';
+import 'package:coffeestories/core/widgets/secondary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/route_names.dart';
 import '../../../app/theme/app_colors.dart';
+import '../../../core/widgets/primary_app_bar.dart';
 import '../widgets/credit_package.dart';
 import '../widgets/info_bullet.dart';
 import 'credit_purchase_cubit.dart';
@@ -24,9 +27,7 @@ class _CreditPurchasePageState extends State<CreditPurchasePage> {
   @override
   void initState() {
     super.initState();
-
     cubit = context.read<CreditPurchaseCubit>();
-
     // Trigger initial load once the widget is in the tree.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       cubit.load();
@@ -64,7 +65,6 @@ class _CreditPurchasePageState extends State<CreditPurchasePage> {
         },
         child: BlocBuilder<CreditPurchaseCubit, CreditPurchaseState>(
           builder: (context, state) {
-
             return Scaffold(
               backgroundColor: AppColors.background,
               body: SafeArea(
@@ -72,64 +72,7 @@ class _CreditPurchasePageState extends State<CreditPurchasePage> {
                 child: Column(
                   children: [
                     // Header
-                    Container(
-                      padding: EdgeInsets.fromLTRB(24.w, 64.h, 24.w, 20.h),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AppColors.foreground.withAlpha(20),
-                            width: 1,
-                          ),
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 44.w,
-                            height: 44.w,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(999),
-                              onTap: onBack,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.foreground.withAlpha(16),
-                                  shape: BoxShape.circle,
-                                ),
-                                alignment: Alignment.center,
-                                child: Icon(
-                                  Icons.arrow_back_ios_new,
-                                  size: 18.sp,
-                                  color: AppColors.foreground,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 12.w),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Kredi Satın Al',
-                                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  color: AppColors.foreground,
-                                  fontSize: 20.sp,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              SizedBox(height: 2.h),
-                              Text(
-                                'Sohbet kredinizi artırın',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: AppColors.foreground.withAlpha(166),
-                                  fontSize: 12.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-
+                    PrimaryAppBar(title: 'Kredi Satın Al', subtitle: 'Sohbet kredinizi artırın'),
                     // BODY
                     Expanded(
                       child: state.when(
@@ -228,47 +171,18 @@ class _CreditPurchasePageState extends State<CreditPurchasePage> {
                           return Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              SizedBox(
-                                width: double.infinity,
-                                height: 56.h,
-                                child: OutlinedButton.icon(
-                                  onPressed: busy ? null : () => cubit.watchAdToEarn(),
-                                  style: OutlinedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16.r),
-                                    ),
-                                    side: BorderSide(
-                                      color: AppColors.foreground.withAlpha(36),
-                                      width: 1,
-                                    ),
-                                    backgroundColor: Colors.transparent,
-                                    foregroundColor: AppColors.foreground,
-                                  ),
-                                  icon: Icon(Icons.ondemand_video, size: 20.sp),
-                                  label: Text(
-                                    busy && isWatchingAd ? 'Reklam Yükleniyor...' : 'Reklam İzle Kazan',
-                                    style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700),
-                                  ),
-                                ),
+                              SecondaryButton(
+                                label: busy && isWatchingAd ? 'Reklam Yükleniyor...' : 'Reklam İzle Kazan',
+                                onTap:  busy ? null : () => cubit.watchAdToEarn(),
+                                icon: Icons.ondemand_video,
                               ),
                               SizedBox(height: 12.h),
                               SizedBox(
                                 width: double.infinity,
                                 height: 56.h,
-                                child: ElevatedButton(
-                                  onPressed: busy ? null : () => cubit.purchaseSelected(),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primary,
-                                    foregroundColor: AppColors.onPrimary,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16.r),
-                                    ),
-                                    elevation: 0,
-                                  ),
-                                  child: Text(
-                                    busy && isPurchasing ? 'İşleniyor...' : 'Satın Al',
-                                    style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w800),
-                                  ),
+                                child: PrimaryButton(
+                                  onTap: busy ? null : () => cubit.purchaseSelected(),
+                                  label: busy && isPurchasing ? 'İşleniyor...' : 'Satın Al'
                                 ),
                               ),
                               Padding(
@@ -286,9 +200,7 @@ class _CreditPurchasePageState extends State<CreditPurchasePage> {
                             ],
                           );
                         },
-                        orElse: () {
-                          return const SizedBox.shrink();
-                        },
+                        orElse: () => const SizedBox.shrink(),
                       ),
                     ),
                   ],
