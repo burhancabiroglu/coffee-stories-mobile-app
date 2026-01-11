@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:ui' as ui;
 
 import 'package:camera/camera.dart';
 import 'package:coffeestories/app/theme/app_colors.dart';
+import 'package:coffeestories/core/data/mock/coffee_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -156,7 +155,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   Future<void> _useMockPhoto() async {
-    final path = await _generateMockPhotoFile();
+    final path = await generateMockPhotoFile(getTemporaryDirectory());
     if (!mounted) return;
     cubit.onPhotoCaptured(path);
   }
@@ -166,59 +165,6 @@ class _CameraPageState extends State<CameraPage> {
     // Flow cubit karar versin: restart mı, çıkış mı.
     cubit.cancelFlow();
   }
-
-  Future<String> _generateMockPhotoFile() async {
-    // 800x800 canvas: kahve hissi.
-    const w = 800.0;
-    const h = 800.0;
-
-    final recorder = ui.PictureRecorder();
-    final canvas = Canvas(recorder, const Rect.fromLTWH(0, 0, w, h));
-
-    // radial gradient background (kahve)
-    final bgPaint = Paint()
-      ..shader = ui.Gradient.radial(
-        const Offset(w / 2, h / 2),
-        400,
-        [
-          AppColors.primary,
-          const Color(0xFF6B4226),
-          const Color(0xFF4A2F1A),
-        ],
-        [0.0, 0.55, 1.0],
-      );
-
-    canvas.drawRect(const Rect.fromLTWH(0, 0, w, h), bgPaint);
-
-    // cup circle
-    final cupPaint = Paint()
-      ..color = const Color(0xFFD4C4B0);
-    canvas.drawCircle(const Offset(w / 2, h / 2), 200, cupPaint);
-
-    // emoji / icon text
-    final textPainter = TextPainter(
-      text: const TextSpan(
-        text: '☕',
-        style: TextStyle(fontSize: 80),
-      ),
-      textDirection: TextDirection.ltr,
-    )
-      ..layout();
-    textPainter.paint(canvas,
-        Offset(w / 2 - textPainter.width / 2, h / 2 - textPainter.height / 2));
-
-    final picture = recorder.endRecording();
-    final image = await picture.toImage(w.toInt(), h.toInt());
-    final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-
-    final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/mock_coffee_${DateTime
-        .now()
-        .millisecondsSinceEpoch}.png');
-    await file.writeAsBytes(bytes!.buffer.asUint8List(), flush: true);
-    return file.path;
-  }
-
   @override
   Widget build(BuildContext context) {
     // Bu page normalde sadece state.camera iken gösterilecek,

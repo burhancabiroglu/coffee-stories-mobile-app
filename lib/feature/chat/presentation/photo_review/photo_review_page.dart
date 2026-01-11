@@ -41,8 +41,7 @@ class PhotoReviewPage extends StatelessWidget {
                           'Fotoğraf Önizleme',
                           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             color: AppColors.foreground,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
