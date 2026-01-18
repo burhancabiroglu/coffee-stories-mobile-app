@@ -1,4 +1,4 @@
-package com.cabir.coffeestories
+package com.cabir.coffeegenie
 
 import io.flutter.embedding.android.FlutterActivity
 

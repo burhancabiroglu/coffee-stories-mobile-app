@@ -1,23 +1,9 @@
+import 'package:coffeegenie/core/ui/blank_page.dart';
 import 'package:go_router/go_router.dart';
 
 import 'route_names.dart';
 import 'app_flow_cubit.dart';
 import 'go_router_refresh_stream.dart';
-
-import 'package:coffeestories/feature/auth/presentation/register/register_page.dart';
-import 'package:coffeestories/feature/auth/presentation/login/login_page.dart';
-import 'package:coffeestories/feature/credit/presentation/credit_purchase_page.dart';
-import 'package:coffeestories/feature/home/presentation/home_page.dart';
-import 'package:coffeestories/feature/settings/presentation/help/help_page.dart';
-import 'package:coffeestories/feature/settings/presentation/notification/notification_page.dart';
-import 'package:coffeestories/feature/settings/presentation/policy/policy_page.dart';
-import 'package:coffeestories/feature/settings/presentation/privacy/privacy_page.dart';
-import 'package:coffeestories/feature/settings/presentation/profile/profile_page.dart';
-import 'package:coffeestories/feature/settings/presentation/settings/settings_page.dart';
-import 'package:coffeestories/feature/settings/presentation/terms/terms_page.dart';
-import 'package:coffeestories/feature/auth/presentation/splash/splash_page.dart';
-import 'package:coffeestories/feature/auth/presentation/onboarding/onboarding_page.dart';
-import 'package:coffeestories/feature/chat/presentation/chat_flow/chat_flow_page.dart';
 
 
 GoRouter createRouter(AppFlowCubit flow) {
@@ -55,59 +41,59 @@ GoRouter createRouter(AppFlowCubit flow) {
       routes: [
         GoRoute(
           path: RouteNames.splash,
-          builder: (_, _) => const SplashPage(),
+          builder: (_, _) => const BlankPage(),
         ),
         GoRoute(
           path: RouteNames.onboarding,
-          builder: (_, __) => const OnboardingPage(),
+          builder: (_, __) => const BlankPage(),
         ),
         GoRoute(
           path: RouteNames.login,
-          builder: (_, __) => const LoginPage(),
+          builder: (_, __) => const BlankPage(),
         ),
         GoRoute(
           path: RouteNames.register,
-          builder: (_, __) => const RegisterPage(),
+          builder: (_, __) => const BlankPage(),
         ),
         GoRoute(
           path: RouteNames.home,
-          builder: (_, __) => const HomePage(),
+          builder: (_, __) => const BlankPage(),
         ),
         GoRoute(
           path: RouteNames.creditPurchase,
-          builder: (_, __) => const CreditPurchasePage(),
+          builder: (_, __) => const BlankPage(),
         ),
         GoRoute(
           path: RouteNames.chatFlow,
-          builder: (_, __) => const ChatFlowPage(),
+          builder: (_, __) => const BlankPage(),
         ),
         GoRoute(
           path: RouteNames.settings,
-          builder: (_, __) => const SettingsPage(),
+          builder: (_, __) => const BlankPage(),
           routes: [
             GoRoute(
               path: 'profile',
-              builder: (_, __) => const SettingsProfilePage(),
+              builder: (_, __) => const BlankPage(),
             ),
             GoRoute(
               path: 'notifications',
-              builder: (_, __) => const SettingsNotificationsPage(),
+              builder: (_, __) => const BlankPage(),
             ),
             GoRoute(
               path: 'privacy',
-              builder: (_, __) => const SettingsPrivacyPage(),
+              builder: (_, __) => const BlankPage(),
             ),
             GoRoute(
               path: 'help',
-              builder: (_, __) => const SettingsHelpPage(),
+              builder: (_, __) => const BlankPage(),
             ),
             GoRoute(
               path: 'terms',
-              builder: (_, __) => const SettingsTermsPage(),
+              builder: (_, __) => const BlankPage(),
             ),
             GoRoute(
               path: 'privacy-policy',
-              builder: (_, __) => const SettingsPrivacyPolicyPage(),
+              builder: (_, __) => const BlankPage(),
             ),
           ],
         ),

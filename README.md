@@ -1,4 +1,4 @@
-# coffeestories
+# coffeegenie
 
 A new Flutter project.
 

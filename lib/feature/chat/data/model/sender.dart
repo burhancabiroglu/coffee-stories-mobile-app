@@ -1,1 +1,0 @@
-enum Sender { user, ai }
